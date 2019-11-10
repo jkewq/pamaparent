@@ -4,12 +4,7 @@ require 'pamaparent.php';
 
 // A program code snippet that was written in LISP is highly ideal choice for testing our class :)
 // Example is taken from: https://www2.cs.sfu.ca/CourseCentral/310/pwfong/Lisp/1/tutorial1.html
-$str = '(defun list-member (E L)
-  "Test if E is a member of L."
-  (cond
-   ((null L)          nil)   
-   ((eq E (first L))  t)     
-   (t                 (list-member E (rest L)))))';
+$str = '(defun list-member (E L) "Test if E is a member of L." (cond ((null L) nil) ((eq E (first L)) t) (t (list-member E (rest L)))))';
 
 $pp = new PamaParent('(', ')'); // we are specifying the opening and closing elements
 $success = $pp->parse($str); // let's parse our example
