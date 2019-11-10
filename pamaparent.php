@@ -15,6 +15,13 @@ class PamaParent {
 	private $_errorType;
 	private $_errorPosition;
 	
+	/**
+	 * Takes the opening and closing elements as arguments and checks if they are 1 char long
+	 *
+	 * @param string $opening opening element (1 char long)
+	 * @param string $closing closing element (1 char long)
+	 * @return void
+	 */
 	public function __construct(string $opening='[', string $closing=']') {
 		if (mb_strlen($opening) != 1 || mb_strlen($closing) != 1) {
 			throw new Exception('The length of opening and closing items must be exactly 1 character');	
@@ -23,6 +30,12 @@ class PamaParent {
 		$this->_closing = $closing;
 	}
 	
+	/**
+	 * Parsing the string supplied as argument
+	 *
+	 * @param string $input string to parse
+	 * @return bool success status - true if successfully parsed, false otherwise
+	 */
 	public function parse(string $input): bool {
 		$this->_successStatus = true;
 		$levelBegins = [];
@@ -48,30 +61,65 @@ class PamaParent {
 		return $this->_successStatus;
 	}
 	
+	/**
+	 * Returns an array containing the positions of the opening elements (indexed from zero)
+	 *
+	 * @return array positions of the opening elements (indexed from zero)
+	 */
 	public function getOpeningPositions(): array {
 		return $this->_openingPositions;
 	}
 	
+	/**
+	 * Returns an array containing the positions of the closing elements (indexed from zero)
+	 *
+	 * @return array positions of the closing elements (indexed from zero)
+	 */
 	public function getClosingPositions(): array {
 		return $this->_closingPositions;
 	}
 	
+	/**
+	 * Returns an array containing positions of matching pairs [opening element, closing element]
+	 *
+	 * @return array positions of matching pairs
+	 */
 	public function getPairPositions(): array {
 		return $this->_pairPositions;
 	}
 	
+	/**
+	 * Returns an associative array where the key is the position of the opening element and the value is the position of the matching
+	 * closing element
+	 *
+	 * @return array 
+	 */
 	public function getRightJumpIndexes(): array {
 		return $this->_rightJumpIndexes;
 	}
 	
+	/**
+	 * Returns an associative array where the key is the position of the closing element and the value is the position of the matching
+	 * opener element
+	 *
+	 * @return array
+	 */
 	public function getLeftJumpIndexes(): array {
 		return $this->_leftJumpIndexes;
 	}
 	
+	/**
+	 * Returns the index of the last level (levels are indexed from zero)
+	 *
+	 * @return int
+	 */
 	public function getMaxLevel(): int {
 		return max(array_keys($this->_contents));
 	}
 	
+	/**
+	 * 
+	 */
 	public function getContentsByLevel(int $level=null): array {
 		if (is_null($level) === FALSE) {
 			return $this->_contents[$level];	
